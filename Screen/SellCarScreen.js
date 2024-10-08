@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
-import { Picker } from '@react-native-picker/picker'; // For dropdowns
-import * as ImagePicker from 'expo-image-picker'; // For image uploads
-import * as FileSystem from 'expo-file-system'; // To convert image to Base64
-import axios from 'axios'; // For HTTP requests
-
+import { Picker } from '@react-native-picker/picker'; 
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system'; 
+import axios from 'axios'; 
 const SellCarScreen = () => {
   const [step, setStep] = useState(1);
   const [carBrand, setCarBrand] = useState('');
@@ -15,30 +14,29 @@ const SellCarScreen = () => {
   const [fuelType, setFuelType] = useState('');
   const [transmission, setTransmission] = useState('');
   const [carCondition, setCarCondition] = useState('');
-  const [carImages, setCarImages] = useState([]); // Store Base64 encoded images
+  const [description, setDescription] = useState(''); 
+  const [carImages, setCarImages] = useState([]); 
   const [fullName, setFullName] = useState('');
   const [address, setAddress] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [email, setEmail] = useState('');
 
-  // For handling image uploads
+ 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsMultipleSelection: true, // Allow multiple image selection
+      allowsMultipleSelection: true, 
       quality: 1,
     });
 
     if (!result.canceled) {
-      const imageUri = result.assets[0].uri; // Get the URI of the first selected image
+      const imageUri = result.assets[0].uri; 
 
-      // Convert image to Base64
+      
       const base64Image = await FileSystem.readAsStringAsync(imageUri, { encoding: 'base64' });
-      setCarImages([...carImages, `data:image/jpeg;base64,${base64Image}`]); // Add the Base64 string
+      setCarImages([...carImages, `data:image/jpeg;base64,${base64Image}`]); 
     }
   };
-
-  // Handle form submission
   const handleSubmit = async () => {
     const carData = {
       carBrand,
@@ -49,7 +47,8 @@ const SellCarScreen = () => {
       fuelType,
       transmission,
       carCondition,
-      carImages, // Base64 encoded images
+      description, 
+      carImages, 
       fullName,
       address,
       mobileNumber,
@@ -71,8 +70,8 @@ const SellCarScreen = () => {
       case 1:
         return (
           <View style={styles.formSection}>
-            <Text style={styles.title}>Part 1: Car Details</Text>
-            {/* Pickers and TextInput for car details */}
+            <Text style={styles.title}> Car Details</Text>
+      
             <Picker selectedValue={carBrand} style={styles.input} onValueChange={(itemValue) => setCarBrand(itemValue)}>
               <Picker.Item label="Select Car Brand" value="" />
               <Picker.Item label="Toyota" value="Toyota" />
@@ -127,6 +126,12 @@ const SellCarScreen = () => {
               <Picker.Item label="Manual" value="Manual" />
               <Picker.Item label="Automatic" value="Automatic" />
             </Picker>
+            <TextInput
+              style={styles.input}
+              placeholder="Tell More about your car"
+              value={description} 
+              onChangeText={setDescription} 
+            />
             <TouchableOpacity style={styles.button} onPress={() => setStep(2)}>
               <Text style={styles.buttonText}>Continue</Text>
             </TouchableOpacity>
@@ -135,7 +140,7 @@ const SellCarScreen = () => {
       case 2:
         return (
           <View style={styles.formSection}>
-            <Text style={styles.title}>Part 2: Car Look & Upload Images</Text>
+            <Text style={styles.title}>Car Look & Upload Images</Text>
             <Button title="Upload Car Images" onPress={pickImage} />
             <View style={styles.imageContainer}>
               {carImages.map((imageUri, index) => (

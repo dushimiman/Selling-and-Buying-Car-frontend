@@ -6,22 +6,24 @@ const RegisterScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState(''); // New phone number state
   const [role, setRole] = useState('');
 
   const handleRegister = async () => {
-    if (username && email && password && role) {
+    if (username && email && password && phoneNumber && role) {
       try {
-        // Corrected URL with '//' after 'http:'
+        // Make sure the server API is updated to handle phoneNumber and role
         const response = await axios.post('http://192.168.1.72:5000/api/register', {
           username,
           email,
           password,
+          phoneNumber, // Send phone number to the backend
           role,
         });
 
         if (response.status === 201) {
           Alert.alert('Success', response.data.message);
-          navigation.navigate('LoginScreen'); // Ensure this matches the registered route name
+          navigation.navigate('LoginScreen');
         }
       } catch (error) {
         if (error.response) {
@@ -60,7 +62,14 @@ const RegisterScreen = ({ navigation }) => {
       />
       <TextInput
         style={styles.input}
-        placeholder="Role (admin or seller)"
+        placeholder="Phone Number" 
+        value={phoneNumber}
+        onChangeText={setPhoneNumber}
+        keyboardType="phone-pad"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Role (admin, seller, buyer)" // Updated role options
         value={role}
         onChangeText={setRole}
       />

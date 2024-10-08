@@ -59,20 +59,7 @@ const BuyCarScreen = ({ navigation }) => {
           <TextInput style={styles.searchInput} placeholder="Search car, model, etc." />
         </View>
 
-        <View style={styles.filters}>
-          <TouchableOpacity style={styles.filterButton}>
-            <Text style={styles.filterText}>Select brand</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.filterButton}>
-            <Text style={styles.filterText}>Select body type</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.filterButton}>
-            <Text style={styles.filterText}>Select budget</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.filterButton}>
-            <Text style={styles.filterText}>Select fuel type</Text>
-          </TouchableOpacity>
-        </View>
+       
 
         <TouchableOpacity style={styles.findButton}>
           <Text style={styles.findButtonText}>Find new car</Text>
