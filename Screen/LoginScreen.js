@@ -16,11 +16,10 @@ const LoginScreen = ({ navigation }) => {
 
             if (response.status === 200) {
                 Alert.alert('Success', response.data.message);
-                // Store the token securely for future requests
                 const token = response.data.token;
 
-                // Navigate to the BuyCarNavigator after successful login
-                navigation.navigate('HomeTabs'); // This matches the name in App.js
+                
+                navigation.navigate('HomeTabs'); 
             }
         } catch (error) {
             if (error.response) {
